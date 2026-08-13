@@ -1,0 +1,25 @@
+name: django-cicd-pipeline
+
+
+on:
+  push:
+    branches:
+        - master
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v4
+
+            - name:  Set up Python
+              uses: actions/setup-python@v5
+
+             
+            - name: Install Dependencies
+              run: |
+                    pip install django
+            - name  : Run Tests
+              run: |
+                    python manage.py test
