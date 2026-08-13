@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{ profile.name }} — {{ profile.title }}</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      background: #f4f6f8;
+      color: #22272e;
+      line-height: 1.6;
+    }
+    .wrap { max-width: 860px; margin: 0 auto; padding: 24px 16px 48px; }
+
+    header {
+      background: linear-gradient(135deg, #1f6feb, #0d3b7a);
+      color: #fff;
+      border-radius: 12px;
+      padding: 32px 28px;
+      margin-bottom: 24px;
+    }
+    header h1 { font-size: 2rem; }
+    header .title { font-size: 1.05rem; opacity: .9; margin-top: 4px; }
+    header .tagline { margin-top: 12px; opacity: .85; }
+    .contact { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px 18px; font-size: .9rem; }
+    .contact a { color: #fff; }
+
+    section {
+      background: #fff;
+      border: 1px solid #e2e6ea;
+      border-radius: 12px;
+      padding: 22px 24px;
+      margin-bottom: 18px;
+    }
+    section h2 {
+      font-size: 1.15rem;
+      color: #0d3b7a;
+      margin-bottom: 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #eef1f4;
+    }
+
+    .skills { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; }
+    .skills li {
+      background: #eaf2ff;
+      color: #1f6feb;
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: .875rem;
+    }
+
+    .item { padding: 12px 0; border-bottom: 1px dashed #e8ebee; }
+    .item:last-child { border-bottom: none; padding-bottom: 0; }
+    .item h3 { font-size: 1rem; }
+    .meta { font-size: .85rem; color: #6b7580; margin-bottom: 4px; }
+    .tech { font-size: .82rem; color: #1f6feb; margin-top: 4px; }
+
+    footer { text-align: center; color: #8892a0; font-size: .82rem; margin-top: 28px; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+
+    <header>
+      <h1>{{ profile.name }}</h1>
+      <div class="title">{{ profile.title }}</div>
+      <div class="tagline">{{ profile.tagline }}</div>
+      <div class="contact">
+        <span>📍 {{ profile.location }}</span>
+        <a href="mailto:{{ profile.email }}">✉️ {{ profile.email }}</a>
+        <span>📞 {{ profile.phone }}</span>
+        <a href="{{ profile.github }}" target="_blank" rel="noopener">GitHub</a>
+        <a href="{{ profile.linkedin }}" target="_blank" rel="noopener">LinkedIn</a>
+      </div>
+    </header>
+
+    <section>
+      <h2>About Me</h2>
+      <p>{{ profile.about }}</p>
+    </section>
+
+    <section>
+      <h2>Skills</h2>
+      <ul class="skills">
+        {% for skill in profile.skills %}
+          <li>{{ skill }}</li>
+        {% endfor %}
+      </ul>
+    </section>
+
+    <section>
+      <h2>Experience</h2>
+      {% for job in profile.experience %}
+        <div class="item">
+          <h3>{{ job.role }} — {{ job.company }}</h3>
+          <div class="meta">{{ job.period }}</div>
+          <p>{{ job.description }}</p>
+        </div>
+      {% endfor %}
+    </section>
+
+    <section>
+      <h2>Projects</h2>
+      {% for project in profile.projects %}
+        <div class="item">
+          <h3>{{ project.name }}</h3>
+          <p>{{ project.description }}</p>
+          <div class="tech">{{ project.tech }}</div>
+        </div>
+      {% endfor %}
+    </section>
+
+    <section>
+      <h2>Education</h2>
+      <div class="item">
+        <h3>{{ profile.education.degree }}</h3>
+        <div class="meta">{{ profile.education.college }} · {{ profile.education.year }}</div>
+      </div>
+    </section>
+
+    <footer>© {{ profile.name }} — dummy portfolio, Django se banaya gaya.</footer>
+
+  </div>
+</body>
+</html>
