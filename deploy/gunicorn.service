@@ -1,0 +1,18 @@
+[Unit]
+Description=gunicorn daemon for ankur_portfolio
+Requires=gunicorn.socket
+After=network.target
+
+[Service]
+User=ubuntu
+Group=www-data
+WorkingDirectory=/home/ubuntu/ankur_portfolio
+EnvironmentFile=/home/ubuntu/ankur_portfolio/.env
+ExecStart=/home/ubuntu/ankur_portfolio/venv/bin/gunicorn \
+          --access-logfile - \
+          --workers 3 \
+          --bind unix:/run/gunicorn.sock \
+          ankur_portfolio.wsgi:application
+
+[Install]
+WantedBy=multi-user.target
