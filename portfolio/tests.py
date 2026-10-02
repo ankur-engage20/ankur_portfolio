@@ -1,6 +1,6 @@
 import json
 
-from django.test import TestCase
+from django.test import TestCase, override_settings
 
 from .models import Task
 
@@ -49,3 +49,24 @@ class PageTests(TestCase):
     def test_pages_load(self):
         self.assertEqual(self.client.get("/").status_code, 200)
         self.assertEqual(self.client.get("/tasks/").status_code, 200)
+
+
+@override_settings(CORS_ALLOW_ALL_ORIGINS=False, CORS_ALLOWED_ORIGINS=["https://web.gpslive.online"])
+class CorsTests(TestCase):
+    def test_allowed_origin_gets_cors_header(self):
+        response = self.client.get("/api/tasks/", HTTP_ORIGIN="https://web.gpslive.online")
+        self.assertEqual(response["Access-Control-Allow-Origin"], "https://web.gpslive.online")
+
+    def test_other_origin_is_blocked(self):
+        response = self.client.get("/api/tasks/", HTTP_ORIGIN="https://evil.example.com")
+        self.assertNotIn("Access-Control-Allow-Origin", response)
+
+    def test_preflight_for_json_post(self):
+        response = self.client.options(
+            "/api/tasks/",
+            HTTP_ORIGIN="https://web.gpslive.online",
+            HTTP_ACCESS_CONTROL_REQUEST_METHOD="POST",
+            HTTP_ACCESS_CONTROL_REQUEST_HEADERS="content-type",
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertIn("content-type", response["Access-Control-Allow-Headers"])
