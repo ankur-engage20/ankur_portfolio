@@ -61,8 +61,7 @@ PROFILE = {
 
 
 def index(request):
-    # TEST 2: jaan-boojh ke error — aakhri ")" hata diya hai
-    return render(request, "portfolio/index.html", {"profile": PROFILE}
+    return render(request, "portfolio/index.html", {"profile": PROFILE})
 
 
 def tasks_page(request):
