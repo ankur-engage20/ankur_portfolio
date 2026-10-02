@@ -4,7 +4,7 @@ from django.shortcuts import render
 PROFILE = {
     "name": "Ankur Sharma",
     "title": "DevOps Engineer",
-    "tagline": "Linux, Docker aur CI/CD ke saath scalable infra banata hoon.",
+    "tagline": "EC2, Nginx, Gunicorn aur deploy.sh se live — DevOps journey ka pehla project.",
     "location": "Jaipur, India",
     "email": "ankur@example.com",
     "phone": "+91 98765 43210",
