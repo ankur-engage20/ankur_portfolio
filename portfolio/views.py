@@ -62,3 +62,7 @@ PROFILE = {
 
 def index(request):
     return render(request, "portfolio/index.html", {"profile": PROFILE})
+
+
+def tasks_page(request):
+    return render(request, "portfolio/tasks.html")
